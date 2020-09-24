@@ -1,0 +1,33 @@
+Partners:
+  Eric Duanmu (eduanm01)
+  Jun Sung Tak (jtak01)
+
+Acknowledgements:
+  COMP40 TA's <3
+  Alex Seto
+  Nilay Maity
+  Brian Savage
+  Robert Lester
+ 
+We have accounted for every error and case the hw spec mentions and that we
+could come up with on our own.
+
+When valgrinding simlines, there is a "still reachable" leak that valgrind
+accredits to Atom_string/Atom_new, we have been informed by multiple TAs that
+this memory leak is okay and we do not need to account for it.
+
+Hours spent:
+  brightness.c
+    7 hours
+    
+  Design document
+    2 hours
+  
+  readaline.c
+    5 hours
+  
+  simlines.c
+    8 hours
+    
+  TOTAL:
+    22 hours

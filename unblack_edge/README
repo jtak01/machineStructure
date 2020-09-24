@@ -1,0 +1,35 @@
+HW2 - iii README           
+
+Name
+        Nilay Maity (nmaity01)
+        Jun Sung Tak (jtak01)
+
+Acknowledgments
+        -Multiple TAs during their office hours
+        -Collaborated with Eric Duanmu, Alex seto for test cases
+
+Everything has been correctly implemented with proper exit sequences
+and without memory leaks
+
+        UArray2.c/.h
+                -Able to declare UArray2 and use implemented methods,
+                 output of useuarray2 matches with correct_useuarray2
+                -Properly frees memory
+
+        Bit2.c/.h
+                -Able to declare Bit2 array and use implemented methods,
+                 output of usebit2 matches with correct_usebit2
+                -Properly frees memory
+
+        sudoku.c
+                -Properly identifies correctly solved sudokus 
+                 (exits with code 0)
+                -Properly identifies incorrectly solved sudokus 
+                 (exits with code 1)
+                -Handles erroneous input properly 
+
+        unblackedges.c
+                -Properly detects and replaces black edges of pbm files
+                -Output is formatted to plain pbm format
+
+Hours spent on assignment: 25 hours

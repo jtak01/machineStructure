@@ -1,0 +1,24 @@
+do we need to account for
+	inputs that start with "P2" or "P5" because thats how .pgm files begin // Dont worry about it
+
+	.pgms that literally have less pixels than the header data states
+		ex: deleting a few lines of integers from a .pgm file                  // Dont worry about it
+
+	djpeg test.jpg (no -grayscale option) (leaves 100000+ bytes in still reachable) // Done
+
+
+
+
+	Bad Count Exception
+		Reading too much
+		Reading not enough
+		Reading nothing
+
+	Bad Format Exception
+		Giving it a jpg						YES
+		Giving it non grayscaled image		DONT WORRY ABOUT IT
+		djpeg 								DONT WORRY ABOUT IT
+		Manually fucked up image			
+			Too less
+			0 Pixels
+		Manual Standard In

@@ -1,0 +1,157 @@
+/*********************************************************
+ * HW 2 - locality 
+ * Comp 40 Spring 2020 
+ * 2/20/20
+ * Zoe Hsieh, Jun Sun Tak
+ * zhsieh01, jtak01
+ *
+ *********************************************************/
+
+Acknowledgments: 
+    - TA Office Hours
+    - UArray2 implementation is from previous homework
+
+All transformation options are implemented for ppmtrans.c
+Everything else should be operational.
+
+Architecture of ppmtrans:
+    After reading in the command line input ppmtrans opens the given file,
+    whether from standard in or part of the argument inputted. Then it 
+    calls Pnm_ppmread which allows us to have a Pnm_ppm struct containing 
+    the ppm file. Then the transformation on the picture is mad whether
+    that being a rotation, flip, or transposing, it maps the required function
+    and then prints the result to standard out using Pnm_ppmwrite. Finally
+    when nothing fails and the whole process goes smoothly, the program
+    exits with code 0.
+
+Device used: Powerspec G355
+CPU type: Intel Core i7-9700K CPU @ 3.60GHz
+Clock speed: 3.60 GHz
+
+Image used: wind-cave.jpg at pnmscale 15.4
+Pixel Count: 88627998 pixels
+-------------------------------------------------------------------------------
+|               row_major      |      col_major        |     block_major      |
+|------------------------------------------------------------------------------
+|90 deg   |4505346698 (4.50s)  |4716295213 (4.72s)     |11351227139 (11.35s)  |
+|         |51ns/pix            |53ns/pix               |128ns/pix             |
+|         |51inst/pix          |53inst/pix             |128inst/pix           |
+|         |--------------------------------------------------------------------
+|180 deg  |3299997813 (3.30s)  |5580158304 (5.58s)     |10857924293 (10.86s)  |
+|         |37ns/pix            |63ns/pix               |123ns/pix             |
+|         |37inst/pix          |63inst/pix             |123inst/pix           |
+|         |--------------------------------------------------------------------
+|270 deg  |4483257048 (4.48s)  |4695530022 (4.70s)     |11100741023 (11.10s)  |
+|         |51ns/pix            |53ns/pix               |125ns/pix             |
+|         |51inst/pix          |53inst/pix             |125inst/pix           |
+|         |--------------------------------------------------------------------
+|hori     |3137174971 (3.14s)  |5338546559 (5.33s)     |11240736028 (11.24s)  |
+|flip     |35ns/pix            |60ns/pix               |127ns/pix             |
+|         |35inst/pix          |60inst/pix             |127inst/pix           |
+|         |--------------------------------------------------------------------
+|vert     |3106980564 (3.11s)  |5361060696 (5.36s)     |10839458588 (10.84s)  |
+|flip     |35ns/pix            |60ns/pix               |122ns/pix             |
+|         |35inst/pix          |60inst/pix             |122inst/pix           |
+|         |--------------------------------------------------------------------
+|trans    |3302272746 (3.30s)  |5632972402 (5.63s)     |10871671637 (10.87s)  |
+|         |37ns/pix            |64ns/pix               |123ns/pix             |
+|         |37inst/pix          |64inst/pix             |123inst/pix           |
+|------------------------------------------------------------------------------
+
+Image used: wind-cave.jpg at pnmscale 4.4
+Pixel Count: 7233850 pixels
+-------------------------------------------------------------------------------
+|               row_major      |      col_major        |     block_major      |
+|------------------------------------------------------------------------------
+|90 deg   |343245185 (0.34s)   |369473133 (0.37s)      |927168215 (0.93s)     |
+|         |47ns/pix            |51ns/pix               |128ns/pix             |
+|         |47inst/pix          |51inst/pix             |128inst/pix           |
+|         |--------------------------------------------------------------------
+|180 deg  |267342949 (0.27s)   |419420985 (0.42s)      |889969338 (0.89s)     |
+|         |37ns/pix            |52ns/pix               |123ns/pix             |
+|         |37inst/pix          |52inst/pix             |123inst/pix           |
+|         |--------------------------------------------------------------------
+|270 deg  |341633955 (0.34)    |372813647 (0.37s)      |925738272 (0.93s)     |
+|         |47ns/pix            |53ns/pix               |128ns/pix             |
+|         |47inst/pix          |53inst/pix             |128inst/pix           |
+|         |--------------------------------------------------------------------
+|hori     |258013842 (0.26s)   |402529302 (0.40s)      |942198580 (0.94s)     |
+|flip     |36ns/pix            |56ns/pix               |130ns/pix             |
+|         |36inst/pix          |56inst/pix             |130inst/pix           |
+|         |--------------------------------------------------------------------
+|vert     |254669763 (0.25s)   |395568601 (0.40s)      |890830998 (0.89s)     |
+|flip     |35ns/pix            |55ns/pix               |123ns/pix             |
+|         |35inst/pix          |55inst/pix             |123inst/pix           |
+|         |--------------------------------------------------------------------
+|trans    |269741579 (0.27s)   |428042234 (0.43s)      |888992222 (0.89s)     |
+|         |37ns/pix            |59ns/pix               |123ns/pix             |
+|         |37inst/pix          |59inst/pix             |123inst/pix           |
+|------------------------------------------------------------------------------
+
+
+According to the results above, we can say that the fastest access method is 
+the row-major access. Column-major comes in second and surprisingly block-major
+access was consistently the slowest. During the estimation phase of this 
+assignment, my partner and I determined that although block-major access may
+not be the fastest it will still be faster than col-major access. This was due
+to the cache hit and miss rate. One reason why block_major was significantly 
+slower than other methods is that for each pixel to operate on, there are more
+internal operations that has to be done. In other words, it is not as 
+efficient, instruction number wise. As a result, in the table above
+block_major access all are over 100 instructions per pixel. This is definelty
+due to the number of rapid calculation that needs to be done in order to locate
+a single pixel. While arithmetic calculations are done with incredible speed
+on a computer, the sheer number of simple calculations to do is higher for the
+block-major access. 
+
+We can see that the durations of 90 and 270 rotations are very similar.
+Furthermore, the instructions per pixel value were the same for each rotation
+within its own major access. This is clearly due to the fact that the 
+transformation done for 90 and 270 degrees are essentially the same except that
+90 degrees goes around in clockwise fashion while 270 degrees goes around in
+counter-clockwise fashion. 
+
+Finally, we also see that the difference between row_major and col_major are 
+significantly higher for rotation 180, the flips, and the transposing 
+transformation. Since its read with row-major access and then written again in 
+row-major access, row-major is significantly faster than col-major for any of 
+the transformations mentioned above.   
+
+The number of instructions per pixel was a little bit larger for the bigger
+picture; however it was in such small units. Furthermore, when the bigger image
+was being transformed, the time differences between row-major and col-major
+was much more significant. 
+
+
+
+a2plain.c    : implementation of plain A2 methods. Uses UArray2 arrays for
+each function. Doesn't use block format. 
+
+uarray2b.c   : implementation of createing 2D unboxed array that stores 
+elements in each block 
+
+ppmtrans.c   : reads in an image and transforms the image based on command
+               line
+
+
+To compile the program simply type 'make' in the console with ppmtrans
+You can execute it with './ppmtrans' with arguments after specifying which
+transformation the image should do and (optional) time output file
+
+
+---
+
+Makefile         : standard Makefile needed to compile the programs
+                   
+README           : this file
+
+
+-- things that work correctly and don't ---
+
+
+
+---- PART E ----
+
+Hours spend on completing assignment: 
+
+    Approx. 25 hours

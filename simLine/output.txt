@@ -1,0 +1,34 @@
+
+notes.txt                  3
+notes.txt                  6
+notes.txt                  8
+notes.txt                  9
+notes.txt                 10
+notes.txt                 11
+notes.txt                 16
+superLongNamedTextFileBecause.txt       7
+
+e
+def.txt                    6
+superLongNamedTextFileBecause.txt       4
+
+a
+abc.txt                    4
+abc.txt                    5
+abc.txt                    6
+abc.txt                    7
+abc.txt                    8
+def.txt                    4
+def.txt                    5
+def.txt                    7
+def.txt                    9
+superLongNamedTextFileBecause.txt       3
+superLongNamedTextFileBecause.txt       6
+
+hello world
+abc.txt                    1
+def.txt                    1
+
+world
+abc.txt                    3
+def.txt                    3

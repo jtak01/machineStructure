@@ -1,0 +1,38 @@
+Jun Sung Tak (jtak01)
+Nilay Maity (nmaity01)
+
+No additional help required 
+
+No significant departures from initial design
+
+Correctly implemented all aspects of homework:
+Program is able to load and execute instructions for
+"Universal Machine" and executes in an appropriate
+amount of time
+
+Design
+um.c: UM program. Uses execute and loader to emulate an Universal Machine.
+um_exec.c: Program that is used by the UM to execute different computations.
+um_load.c: Program that is used by UM and is required to execute.
+           This will extract the instructions from the given .um file.
+seg.c: Manages the segmented memory that is used by the um.
+
+
+TESTS:
+add.um - Tests add operations
+div.um - Tests division operations
+halt.um - Tests halt operation
+mul.um - Tests multiply operation
+print-six.um - Tests different operations and prints "6" at the end
+nand.um - Tests bitwise nand (output of this test should be 4261412864)
+	NOTE: this was tested by outputting values interms of unsigned instead 
+	of char ("%u") just so that we can check the math was correct
+
+
+
+Time to Execute 50 million instructions: 11,292 seconds approximatley
+
+5 hours analyzing
+10 hours designing
+5 hours solving problems
+
